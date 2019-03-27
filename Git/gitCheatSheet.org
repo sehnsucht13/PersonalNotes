@@ -16,3 +16,30 @@ Finally, we have to merge the two repos together before we can push(this is if t
   # This means that the head of the different branches do not match in any way
   git pull origin master --allow-unrelated-histories
 #+END_SRC
+** Make a patch
+#+BEGIN_SRC sh :results output raw
+  git format-patch -numOfCommits --stdout > patchname.diff
+#+END_SRC
+The numOfCommits above is used to indicate how many commits we want to include starting at the HEAD.
+Patchname indicates the name of the patch.
+An alternative where we specify a range of commits which might not start at the head is:
+#+BEGIN_SRC sh :results output raw
+  git format-patch <1st-commit-id>..<last-commit-ID> --stdout > patchName.diff
+#+END_SRC
+** Applying a provided patch
+The command below shows us exactly what will change.
+#+BEGIN_SRC sh :results output raw
+  git apply --stat /path/to/patchName.diff
+#+END_SRC
+
+The command below checks if the patch can be applied /cleanly/.
+#+BEGIN_SRC sh :results output raw
+  git apply --check /path/to/patch.diff
+#+END_SRC
+
+Finally, to actually apply the patch we can use the following:
+#+BEGIN_SRC sh :results output raw
+  git am < /path/to/patchName.diff
+#+END_SRC
+
+
