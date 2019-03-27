@@ -1,7 +1,6 @@
 * Bash Syntax
 Sources:
  - Pro Bash Programming 2nd edition
-   
 ** Header
 Every shell script must start with the shell that we would like to execute it with. In most cases, it is bash and the line which specifies the shell we are using must start with the a #! which is called a hashbang.
 #+BEGIN_SRC sh
@@ -76,7 +75,6 @@ Additionally, there is a way to write to both stdout and to a file. This is done
   # Prints the words specified to stdout and file called fileName
   printf "Hello %s\n" "Johm" "Jim" "Jam" "Jom" | tee fileName
 #+END_SRC
-
 
 ** Command Substitution
 If we need to store the output of a command into a variable, we have two choices when it comes to syntax. The first uses backtics and the second uses round brackets prepended by a $. Example:

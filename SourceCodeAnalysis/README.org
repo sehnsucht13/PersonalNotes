@@ -1,0 +1,1 @@
+This directory contains a set of org filers which contain notes regarding the structure of several open source programs/editor plugins which I find interesting and want to find out more about.
