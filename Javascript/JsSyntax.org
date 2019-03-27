@@ -1,0 +1,382 @@
+* Javascript Syntax
+** Basics
+*** Terminology
+- Transpiling :: Program that converts code from one version of JS to another. (A nice little note is that we can call the babel transpiler on a page that might not be rendering properly ourselves simply by editing the script. The transpiler must come before any JS code!)
+*** Write to console
+To write to the console, we use the console.log command. Usually takes in only text but given that functions are first class citizens, we can input a function which eventually evaluates to a string.
+#+BEGIN_SRC js
+
+  console.log("Something")
+
+#+END_SRC
+*** Comments
+#+BEGIN_SRC js
+// Single line comment
+
+/* Multiline comment */
+#+END_SRC
+*** Data Types
+Javascript has 7 data types, 6 native and 1 not:
+- String
+- Symbol
+- Number
+- Boolean
+- Undefined
+- Null
+- Object(the only non-native one)
+Additionally, we can use the typeof Command to check the type of something.
+#+BEGIN_SRC js :export output
+
+  console.log(" " + typeof 4)
+
+#+END_SRC
+
+#+RESULTS:
+:  number
+: undefined
+*** Variables
+When it comes to defining variables, there are several ways of doing so in JS. Some of them are "outdated" in the sense that they need to be included for backward compatibility.
+
+Additionally, it is important to note that let and const have block scope while var is global so we can easily overwrite other variables somewhere in our code if we are not careful.
+
+Another thing about const, if we let it point to an object, the const variable itself cannot be changed(immutable) but the object itself can be. Essentially, variables referencing objects are using pointers to them. They might be able to modify them depending on whether or not const is used. 
+#+BEGIN_SRC js
+//Declare a constant, has local scope
+const name = 'Yavor';
+//Declare a variable, has local scope
+let name2 = 'Yavor';
+//Old way of declaring. Has a global scope and may pollute namespace.
+var name3 = 'Yavor';
+#+END_SRC
+*** Scopes
+Javascript has 2 scopes. The global one which is always present and then local scopes which are created by using a pair of curly brackets. These scopes can be nested.
+#+BEGIN_SRC js
+//Global scope, Scope 1
+let vars = 4;
+{
+//Scope 2
+let vars = 5;
+ {
+ //Scope 3
+  let vars = 13
+ }
+}
+#+END_SRC
+In the above example, there are 3 scopes at play. Outer global, first local and then another local scope inside of the first one.
+*** String
+In javascript, String data type is treated in a similar fashion as everywhere else. It is an array of characters and even though it is a native datatype, it has wrapper functions. The only thing to note is that both " and ' are used to delimit a string. So if we have any of them inside of the string itself, then they must be escaped.
+#+BEGIN_SRC js
+let string1 = "This is ok";
+
+// Not ok, will crash
+let string2 = "This isn't ok";
+#+END_SRC
+
+ES6 introduces a new way of declaring strings which means that we do not have to worry about this. They are called Template Literals. Here are some examples:
+#+BEGIN_SRC js
+`Hello!`;
+
+//This would have been a problem
+`This would have "Been" a problem`;
+
+//We can also interpolate code inside of them by using curly brackets and prepending a $ sign, Just like bash!
+
+let hello = 1;
+console.log(`This is a test ${hello + 1}`);
+#+END_SRC
+
+#+RESULTS:
+: This is a test 2
+: undefined
+*** Symbols (RESEARCH)
+Need more info, to finish.
+*** Type Coercion
+Javascript is Weakly typed language(variables do not have types upon declaration). When we try to perform an operation which requires variables of the same type, JS will coerce one into the other. This is not reliable so don't explicitly use it. Use casting operations such as:
+#+BEGIN_SRC js
+// Create a string
+String(3);
+
+//Create an int(or rather return it)
+parseInt('3');
+
+//Here is an example of what might happen if we are not careful
+'3' + 4
+//Produces '34'
+#+END_SRC
+*** Boolean values
+Like lisp dialects, javascript has values that evaluate to either true or false when they are exposed to a decision making statement. There are only 9 values that evaluate to false, they are:
+- "" (Empty string)
+- '' (Empty string)
+- `` (Empty string)
+- 0 and -0
+- NaN
+- false
+- null
+- undefine
+*** Equality
+Javascript has two types of equality. The first one is considered to be "soft" equality and comparing two values with different types will force JS to coerce one type into the other. This can often lead to unexpected results so it should mostly be avoided unless we explicitly want coercion. Additionally, JS has a soft and hard inequality operators as well.
+#+BEGIN_SRC js
+let var1 = 1;
+let var2 = 2;
+
+// Soft equality
+var1 == var2;
+
+//Hard equality
+var1 === var2;
+
+//Soft inequality
+var1 != var2;
+
+//Hard inequality
+var1 !== var2;
+#+END_SRC
+*** Arrays
+Arrays in JS are just like anywhere else. They are objects in their own right and can either be created specifically or instantiated from their constructor method.
+#+BEGIN_SRC js
+// Created specifically
+const arr1 = []
+//Created by instantiation
+const arr2 = new Array();
+#+END_SRC
+
+Like some other loosely typed languages, the arrays can hold whatever we want to. We can use several methods to manipulate them.
+#+BEGIN_SRC js
+// Assignment
+arr[index] = `Somethin`;
+
+// Removing an element
+delete arr[index];
+
+// Remove last item and return
+arr1.pop();
+
+//Remove first item and return
+arr1.shift();
+
+//Append item(add to the back). This returns the new length.
+arr1.push(ITEM);
+
+//Prepend item. Returns new length
+arr1.unshift();
+
+//Array -> string. Returns string with each item separated by comma
+arr1.join();
+#+END_SRC
+
+Another interesting concept related to arrays in JS is called "Destructuring". READ MORE ABOUT
+*** Array Iterators
+Javascript has several iterators built into it which let us perform complex operations upon each element of an array. This permits us to use callback functions(explained in the *Functions* section) and apply them for every index possible. Additionally, it saves us from the repetitive paradigm of a for loop being used everywhere. There is no need to demonstrate them in detail so I will simply note their names and give a brief description.
+ + forEach(callback): Loops through the entire array and calls the callback function on every element. A practical example is finding the square of every element of an array. Will return the modified array.
+ + map(callback): Similar to foreach, takes a callback and executes it on each element
+ + reduce(callback): Executes the function upon each value and combines each result into a single value called the accumulator.
+ + filter(callback): Returns a new array, each value is again applied to each index and if it passes the test it is included in the returned array, if not then it is excluded. The purpose of this function is pretty much in the name, it lets us filter an entire array.
+** Functions
+Javascript has 3 main ways of creating functions. Two of those are considered to be anonymous with one being attached to a certain variable while another does not require this and is frequently for relatively small functions included in callbacks.
+*** Function Declaration
+#+BEGIN_SRC js :results output org
+  // Named function
+
+  function myNamedFunc (someParameter) {
+      console.log(someParameter);
+  }
+
+  // For a function to be invoked, it must be called with the brackets at the end, even if there are no arguments passed to it.
+
+  myNamedFunc("Hello");
+
+
+
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+Hello
+#+END_SRC
+*** Function Expressions
+The second way of declaring functions is by using function expressions. You are essentially tying in a function to some variable. This function can be either named or anonymous.
+#+BEGIN_SRC js :results output org
+  // Anonymous case
+
+  const myAnonFunc = function (someString) {
+      console.log(someString);
+  }
+
+  const myNamedFunc = function namedFunc (someString) {
+      console.log(someString);
+  }
+
+  // The anonymous function can only be called by the variable which it is tied to.
+
+  myAnonFunc("Anonymous Hello");
+
+  // Calling named function from a variable
+
+  myNamedFunc("Hello from the const call");
+
+  // Why name a function? So we can debug easier. Every js function has a name parameter that can be invoked. Anon functions default to undefined.
+  // Depending on the browses, some will spit out undefined as the name of the anon function, others will simply spit out an empty string.
+  console.log(myAnonFunc.name);
+
+  console.log(myNamedFunc.name);
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+Anonymous Hello
+Hello from the const call
+myAnonFunc
+namedFunc
+#+END_SRC
+*** Arrow Functions
+Arrow functions are a special way to declare simple functions with syntax that is less verbose than the previous two ways provided. There are some rules tho:
+ + Single parameters can be without parentheses, anything more needs to be enclosed
+ + Body of a function does not need to be placed inside of a block if its only one line, anything more needs to be in curly brackets
+ + No need for return statement if only one statement
+ + They don't bind their value of *this*. The value of the *this* property will be explained in the objects section.
+
+Here is a simple example:
+#+BEGIN_SRC js :results output org
+  // 2 parameters provided, will return sum
+  const addFunc = (x,y) => x + y;
+
+  const retParam = x => x;
+
+  const moreLines = x => {
+      console.log("Wow, need curly brackets");
+      return x + x
+  }
+#+END_SRC
+*** Return Values and Parameters
+#+BEGIN_SRC js :results output org
+  // Return works in the same way as any other language
+
+  function returnFunct(someValue){
+      return someValue;
+  }
+
+  //Example
+  console.log("Returns the value:")
+  console.log(returnFunct(4));
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+Returns the value:
+4
+#+END_SRC
+
+Additionally, every function has a special variable called *arguments* (note the plural). This variable holds all of the arguments that were passed to a function.
+#+BEGIN_SRC js :results output org
+  function myFunctRetArgs(arg1, arg2, arg3){
+      return arguments;
+  }
+
+  // Arguments are returned as an object with the index being the key used to identify each value
+  console.log(myFunctRetArgs(1,2,3));
+
+  // Function does not need to have arguments specified either
+  function noArgs(){
+      return arguments;
+  }
+
+  console.log("No args version:");
+  console.log(noArgs(1,2,4,5,6));
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+[Arguments] { '0': 1, '1': 2, '2': 3 }
+No args version:
+[Arguments] { '0': 1, '1': 2, '2': 4, '3': 5, '4': 6 }
+#+END_SRC
+
+Additionally, ES6 introduced the *rest* operator. The largest difference between the arguments property and the rest operator is that rest returns all of the values passed to the function in an array. This is important since we get to use some powerful methods such as splice, pop... to manipulate this.
+
+#+BEGIN_SRC js :results output org
+  function restfunc(...args){
+      return args;
+  }
+
+  console.log("All args are:");
+  console.log(restfunc(1,2,4,5,6,7,8));
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+All args are:
+[ 1, 2, 4, 5, 6, 7, 8 ]
+#+END_SRC
+
+Similarly to python, js has default values for parameters. Here is a short example:
+#+BEGIN_SRC js :results output org
+  function defFun (name="Yavor"){
+      return name;
+  }
+
+  console.log("Here is with no args: ");
+  console.log(defFun());
+
+  console.log("With arg provided: ");
+  console.log(defFun("Jim"));
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+Here is with no args: 
+Yavor
+With arg provided: 
+Jim
+#+END_SRC
+*** Callbacks
+Given that functions in JS are first class objects, they can be passed as arguments. A function which passed as an argument is called a *callback* and can be called from within the body.
+#+BEGIN_SRC js :results output org
+  function myCallback(){
+      console.log("Hello from callback function");
+  }
+
+  function myCallFunc(value, callback){
+      console.log(value);
+      callback();
+  }
+
+  myCallFunc(4, myCallback);
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+4
+Hello from callback function
+#+END_SRC
+
+A special case arises where we need to make sure that an argument provided is actually a function, this can be done by checking the type of the argument provided and comparing it against the function type. Example below:
+#+BEGIN_SRC js :results output org
+  function testFun(){
+      console.log("This is a function and it will print");
+  }
+
+  var testVar = 4;
+
+  function checkFun(callbackFun){
+      if(typeof(callbackFun) === 'function'){
+          callbackFun();
+      }
+      else{
+          console.log("Arg. provided is not a function");
+      }
+  }
+
+  checkFun(testFun);
+
+  console.log("The second call will fail. Here is the result: ");
+  checkFun(testVar);
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+  This is a function and it will print
+
+  The second call will fail. Here is the result: 
+  Arg. provided is not a function
+#+END_SRC
+** Objects

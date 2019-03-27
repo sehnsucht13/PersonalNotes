@@ -1,0 +1,32 @@
+* Pull Request
+Pull Requests are used as a way to review code before it is pushed into a new branch(this is often times the main/production branch of a project). They have applications in both industry as well as open source and due to this, they can be used in two different workflows which depend on the the collaborative model being used by the owner(s) of the source code. The collaborative models are:
+ + Shared Repository Model: In this model, you have commit privelleges to the repo but often times there will be a rule or two about code being reviewed by somebody else before it is added to the main branch. To signal that you would like to add some code that needs to be reviewed, you can use a pull request.
+ + Fork and Pull Model: In this model, you do not have commit privileges to the main repo(often times in open source) so what you must do is fork the original repo, add and commit your changes and then create a pull request for the branch on your local repo to be added. Just like the previous model, these changes are used for code review/critique and can be accepted or denied.
+
+** Commit Priveleges Available Workflow
+ + Clone Repo
+ + Create a new branch off of the main/production branch
+ + Insert changes
+ + Merge master into your branch and deal with any possible conflicts.(IMPORTANT: Make sure that the local copy of the master branch is up to date with the one being hosted on the repo. Always switch to master and pull before any merges!)
+ + Go to Github, select your branch and make a pull request. You will be asked to create a simple message to accompany your merge request and this should simply explain what the changes are.
+ + Wait for a response from the repo manager.
+
+** Fork Workflow
+ + Fork original repo
+ + Clone forked repo(when you fork something, it will be added to your github profile)
+ + Create a separate branch
+ + Add and commit changes
+ + Merge the master branch into your branch. Since this is a fork, the origin master will be pointing to the copy that you have in your own repo so it is necessary to add the original repo itself as a source. After this is done, switch to your local master branch and pull from the original repo. After this step, merge the changes into your branch and resolve conflicts as needed.
+ + Go on the github website, navigate to the original repository and click on the *New Pull Request* button.
+ + On the compare page, click *Compare Across Forks* and select the original repo as the *base fork* and then navigate to the field to the right which is called the *head fork*. Select your branch and then type a title + description. Create pull request.
+ + Wait for approval, comments....
+* Sources
+** Models
+https://help.github.com/articles/about-collaborative-development-models/
+** Fork
+https://help.github.com/articles/creating-a-pull-request-from-a-fork/
+** Commit Privilege
+https://yangsu.github.io/pull-request-tutorial/
+https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github
+Video:
+https://www.youtube.com/watch?v=oFYyTZwMyAg

@@ -1,0 +1,91 @@
+* Bash Syntax
+Sources:
+ - Pro Bash Programming 2nd edition
+   
+** Header
+Every shell script must start with the shell that we would like to execute it with. In most cases, it is bash and the line which specifies the shell we are using must start with the a #! which is called a hashbang.
+#+BEGIN_SRC sh
+#!/bin/bash
+#: Rest of script...
+#+END_SRC
+
+** Variables and Parameters
+Bash has 2 types of parameters and 1 type of variable. Variables are user defined and they store data just like any other language and parameters are used as either placeholders for the input provided when the shell script is called or to automatically store different information related to the current state of the program.
+
+*** Positional Parameters
+The first type of parameter is the positional parameter. This parameter acts as a placeholder of sorts and lets the user indicate where they would like to put/use the arguments that have been provided with the function. Positional parameters are expressed in the form of $NUMBER. They start at 0 and can go up to as much as needed. The only thing to keep in mind is that parameters that have a number of strictly less that 10 are indicated as $NUMBER while anything that is greater than or equal to 10 has to be written in the form of {$NUMBER}. This is due to backwards compatibility with the bourne shell(predecessor of bash) and inputting something of the for $NUMBER1NUMBER2 will be read as $NUMBER1 $NUMBER2 which is obviously not desired.
+#+BEGIN_SRC sh
+  #!/bin/bash
+  # Here, $1 is the positional parameter. When this script is called with a name provided, it will print whatever the input was.
+  printf "Hello %s\n" "$1"
+
+  #Another example, this time with 2 names
+  printf "Hello again %s, and hello to you %s" "$1" "$2"
+#+END_SRC
+
+*** Special parameters
+Special parameters hold values that are tied into the currently running script. They start with the $ prefix(as all variables and parameters do). Here are some examples:
+ - $@: This variable holds all of the arguments that have been passed to the script. So if we have some script that is called like: script.sh foo bar 
+   Then, the variable $@ will hold "foo bar".
+ - $*: Same job as the $@ special parameter.
+ - $#: Expands to the number of positional parameters provided
+ - $0: Expands to the path of the current script
+ - $$:PID of the current process
+ - $?:exit code of the last executed command
+ - $!: PID of the last executed command
+ - $-: Holds the option flags
+ 
+*** Variables 
+Variables are held in the same way as any other language. They have the form of:
+#+BEGIN_SRC sh
+  #!/bin/bash
+  #Note, there is NO space between the equal sign.
+  variableName=Value
+#+END_SRC
+
+** Printing to the command line
+When it comes to printing, there are two main ways. We can either use echo or we can use printf. Most of the time, printf is better since it gives us more control over the formatting of the outputted message. 
+
+One important thing to note when it comes to the printf command is that it acts like a loop depending on how many arguments are passed to it. What I mean by this is that if we have a printf command that formats a string with 2 format specifiers included and then we provide it with 4 arguments then the string will be printed twice. Once with the first two and a second time with the second pair. Here is an example below.
+#+BEGIN_SRC sh :result output
+  #!/bin/bash
+
+  #Printf called with more arguments than format specifiers present
+  printf "Hello to you %s, and hello to you %s\n" "Yavor" "Konstantinov" "Bugs" "Bunny"
+#+END_SRC
+
+#+RESULTS:
+| Hello to you Yavor | and hello to you Konstantinov |
+| Hello to you Bugs  | and hello to you Bunny        |
+
+An additional use of printf is to format input and store it in a variable WITHOUT printing to stdout. This is accomplished by calling it with the -v option and giving a variable name as well.
+#+BEGIN_SRC sh
+  #!/bin/bash
+  printf -v myNum "Hello again %s\n" "Yavor"
+  printf "Here is the value in the variable myNum: %s\n" "$myNum"
+#+END_SRC
+
+#+RESULTS:
+: Here is the value in the variable myNum: Hello again Yavor
+
+** Input stream and redirection 
+There are several ways of "redirecting" the output to stdout into some file. The main characters used are >, >> and <. The > character will first WIPE any file specified(or create it if it does not exist) and then pipe the output of the function preceding it into that file. The >> char. is not destructive. It simply appends onto an existing file. Finally, the < character will take the contents of a specified file and feed it into the command that precedes the character. So something like COMMAND < FILE will have the contents of FILE be used as arguments to COMMAND. 
+
+Additionally, there is a way to write to both stdout and to a file. This is done using the "tee" command(and possibly a pipe). Example:
+#+BEGIN_SRC sh
+  # Prints the words specified to stdout and file called fileName
+  printf "Hello %s\n" "Johm" "Jim" "Jam" "Jom" | tee fileName
+#+END_SRC
+
+
+** Command Substitution
+If we need to store the output of a command into a variable, we have two choices when it comes to syntax. The first uses backtics and the second uses round brackets prepended by a $. Example:
+#+BEGIN_SRC sh
+#Old, not recommended
+var=`pwd`
+
+#Newer, better and clearer
+var2=$(pwd)
+#+END_SRC
+
+** Looping and Branching

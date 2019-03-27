@@ -1,0 +1,18 @@
+* Git Cheat Sheet
+** Local Repo to pre-made github repo
+When pushing a local repo to a pre-made remote one, we need to set the address of the remote one first
+#+BEGIN_SRC sh :results output raw
+  git remote add origin #LINKTOREPO
+#+END_SRC
+
+To check if everything is correct, we use the following:
+#+BEGIN_SRC sh :results output raw
+  git remote -v
+#+END_SRC
+
+Finally, we have to merge the two repos together before we can push(this is if the repo is initialized with a license or a description)
+#+BEGIN_SRC sh :results output raw
+  # Git will refuse to merge since the two histories are unrelated.
+  # This means that the head of the different branches do not match in any way
+  git pull origin master --allow-unrelated-histories
+#+END_SRC
