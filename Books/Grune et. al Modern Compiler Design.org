@@ -1,0 +1,65 @@
+* Grune et. al. Modern Compiler Design Notes
+** From Program Text to Abstract Syntax Tree
+*** Chapter 2
+The typical pipeline for the frontend of a compiler is divided into several stages:
+- Lexical Analysis which generates tokens
+- Syntax Analysis which generates an abstract syntax tree
+- Context Handling which generates an optional annotated abstract syntax tree. Used to provide extra information during compilation
+**** Regular Expressions
+| Pattern   | Meaning                          |
+|-----------+----------------------------------|
+| x         | Matches the character x          |
+| .         | Matches any character            |
+| [abc...z] | Matches any one character inside |
+| R?        | Matches R or nothing             |
+| R+        | Matches one or more R's          |
+| R*        | Matches 0 or more R's            |
+| R1R2      | Matches R1 followed by R2        |
+| R1 OR  R2 | Matches either R1 or R2          |
+| (R)       | Matches R as a group             |
+
+- There are only two *composition operators*. The first one is invisible(found in R1R2) which indicates order. The second one is explicit( | or pipe symbol) and indicates that we either math R1 or R2.
+- If we want to use *,\,+ or ? in our pattern, we need to escape them with a backslash.
+**** Lexical analysis overview
+The main job of the lexical analyzer is to create tokens. Given a set S of token descriptions and a position P in an input stream, the lexical analyzer must determine which of the expressions in S will match a segment starting at P. If there is more than one statement matching then the lexical analyzer must have a way of handling this. Additionally, if we match the longest string possible and there are still multiple matches then we need to break the tie by assigning an order.
+**** Symbol Table
+A symbol table is a mapping from an identifier onto an associated record which contains information about it. They are usually implemented with a hash table and the typical interface looks something like this:
+#+BEGIN_SRC C :results output raw
+  function Identify(IdName){
+    return pointer to IdInfo structure
+  }
+#+END_SRC
+It is important to return a pointer and not a copy since we might want to augment the record associated with a certain variable name.
+**** Macros and file inclusion
+A macro definition defines an identifier as being a macro and associates a value along with it. From this point, any occurence of the identifier is replaced with its value usually during the lexing stage. An example in C:
+#+BEGIN_SRC C :results output raw
+  #define myMacro 300;
+#+END_SRC
+If I use ~myMacro~ anywhere in the program, it will be replaced by the integer 300.
+
+Another type of macro is the file inclusion macro. Example:
+#+BEGIN_SRC C :results output raw
+  #include <someFile.h>
+#+END_SRC
+This functions similar to the previous example except the value is an entire file itself.
+
+Another macro is the conditional compilation macro or sometimes known as conditional text inclusion macro. When compiling a program, the condition inside the macro is checked. If true then the text between the range identifiers is included in the compilation. If it is not then the text is skipped. Example:
+#+BEGIN_SRC C :results output raw
+  #ifdef UNIX
+  char *file_name_separator = ’/’ ;
+  #else
+  #ifdef MSDOS
+  char *file_name_separator = ’\\ ’ ;
+  #endif
+  #endif
+#+END_SRC
+*** Chapter 3 Tokens to Syntax Tree - Syntax Analysis
+**** Intro
+There are two main ways to write a parser. Either top-down or bottom-up. According to this book, top-down can be generated or handwritten but bottom-up can only be generated.(Need to double check this although I doubt it that they are wrong). Either way, in all cases, the structure is specifed by a context-free grammar.
+
+There are two well-known ways to do parsing. Either deterministic left-to-right top-down(LL method) or deterministic left-to-right bottom-up(LR and LALR method) and a third which is called generalized LR.
+
+When we say *left-to-right*, we mean that the sequence of tokens is processed left to right, one token at a time. When we say *determenistic*, we mean that there is no searching involed and every step taken brings us closer to conclusion and it is never necessary to undo any step.
+
+Note that deterministic parsing methods run in *linear time*.
+**** Two classes of parsing methods
