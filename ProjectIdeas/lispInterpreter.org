@@ -42,4 +42,12 @@ letter = "a" / "b" / " ..." / "z"
 number = "1" / "2" / " ..." / "9"
 
 empty = " "
-
+* Good sources
+** Web
+https://ruslanspivak.com/lsbasi-part1/
+http://dmitrysoshnikov.com/
+** Books
+Cooper & Torczon - Engineering a Compiler 
+Aho et. al - The dragon book 
+Dick Grune et. al. - Modern Compiler Design
+Thorsten Ball - Writing an interprer in Go
