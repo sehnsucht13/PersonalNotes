@@ -1,6 +1,6 @@
 * Lisp interpreter
 - Will support emacs lisp
-- Built in lsp
+- Built in lsp(maybe just json rpc)
 - Json rpc to communicate with node.js
 - support for vscode plugins
 - piece table for buffer representation
@@ -10,6 +10,30 @@
 - High amount of configuration
 - FFI
 - Perhaps interlope with v8/node.js via rpc?
+* Parts
+- Buffer
+- Interpreter
+- Debugger
+- UI
+- FFI
+- Input
+- Text(UTF-8, UTF-16, ASCII)
+- Networking(ssh)
+- File System interface
+- (MAYBE) Paging for large files
+- Syntax Highlighting(syntact | treesitter | reimplement font lock)
+- Macro engine
+- Memory encoding/Dumping
+- Introspection(Could be combined with lexing stage)
+- Threading/Processes
+* Structure
+Two threads at minimum. One for UI and one for interpreter. This way, the UI never freezes.
+
+Large library of built in functions
+- String handling
+- Process/Thread
+- Math?(This one will be tough)
+- And so on...
 * Lexer
 First step will be to build a lexer. Here is a list of tokens which we will need:
 - (
@@ -24,7 +48,8 @@ First step will be to build a lexer. Here is a list of tokens which we will need
 - -
 - /
 - *
-- 
+- .
+- `(<- backtick)
 * Grammar
 ** First possible choice
 s_expression = atomic_symbol \
@@ -51,3 +76,15 @@ Cooper & Torczon - Engineering a Compiler
 Aho et. al - The dragon book 
 Dick Grune et. al. - Modern Compiler Design
 Thorsten Ball - Writing an interprer in Go
+* Some random ideas
+Perhaps, instead of using rpc to send out commands load wasm modules.
+
+UPDATE: On second thought, this would not work. Still need an rpc but we can write a module which converts elisp internal data structures to js for them to be operated on. 
+
+The goal of this is to have interoperability with javascript.
+
+Perhaps, I could write the lisp interpreter in rust and add it to node.js as a wasm module. The code is written in a buffer and when the eval command is triggered and the buffer type is elisp, it is send to the interpreter. Otherwise, if we execute in js, we execute js. This way, node.js will be the "driver" of the entire application and we can have interoperability between lisp and javascript. I will need to provide an api for calling code from lisp and adding libraries and so on and so on.
+
+When it comes to the file system, I can use the node.js built in library(will work on mac,windows and linux) and call that from wasm.
+
+In other words, I make the interpreter in rust. Compile to wasm. Start node.js, load the script containing the interpreter and from there I can write the rest in javascript/typescript perhaps. This will also let me call functions written in JS from lisp which will let the two languages work together.

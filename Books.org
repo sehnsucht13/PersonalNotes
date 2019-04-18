@@ -1,0 +1,79 @@
+#+TODO: TODO READING ABANDONED | DONE
+* Books To Read
+** Fiction
+**** DONE Cormac McCarthy - The Road
+CLOSED: [2018-10-17 Wed 20:15]
+**** DONE Houellebecq - Whatever
+CLOSED: [2018-12-16 Sun 14:52]
+**** DONE Houullebecq - Submission
+CLOSED: [2018-12-22 Sat 20:36]
+**** TODO The Little Prince
+**** DONE Leo Tolstoy - The Devil
+CLOSED: [2018-08-20 Mon 15:54]
+**** DONE Ray Bradbury - Fahrenheit 451
+CLOSED: [2018-08-22 Wed 20:38]
+**** DONE Orwell - 1984
+CLOSED: [2018-08-22 Wed 20:38]
+**** DONE Dostoevski - Notes From the Underground
+CLOSED: [2018-09-15 Sat 23:11]
+**** DONE Dmitry Glukhovsky - Metro 2033
+CLOSED: [2018-11-20 Tue 15:47]
+**** DONE Dmitry Glukhovsky - Metro 2034
+CLOSED: [2018-11-25 Sun 18:07]
+**** TODO Arkadi/Boris Strugatsky - Roadside Picnic
+**** TODO Mark Twain - The adventures of Tom Sawyer
+**** TODO Mark Twain - The Mysterious Stranger
+** Non-Fiction
+*** Philosophy
+**** DONE Viktor Frankl - Man's Search For Meaning
+CLOSED: [2018-08-06 Mon 12:36]
+**** TODO Burnout Society
+**** TODO Schopenhauer - The Wisdom of Life
+**** TODO Marcus Aurelius - Meditations
+**** TODO Nietzsche - Beyond Good and Evil
+**** TODO Nietzsche - Thus Spoke Zarathrustra
+**** TODO Schopenhauer - A very short introduction
+*** Astronomy
+**** TODO Stephen Hawking - A Brief History of Time
+**** TODO OpenStax - Astronomy
+*** History
+**** TODO Van Gogh - The Life
+**** TODO Rotman - Tunnel Rat in Vietnam
+**** TODO Chary - The history of Bulgaria
+**** TODO Primo Levi - If this is a man
+*** Poetry
+**** TODO Rimbaud - Collected Poems
+**** TODO Rilke - Letters To a Young Poet
+**** TODO Kahlil Gibran - The Prophet
+**** TODO Kahlil Gibran - the Definitive Kahlil Gibran
+**** TODO Goethe - Faust
+*** Psychology
+**** TODO Myers - Exploring Psychology 10th Edition
+**** TODO Jung - Modern Man in Search of a Soul
+**** TODO Jung - Psychological Types
+**** TODO Jung - Psychology and the Occult
+**** TODO Hadnagy - Social Engineering: The Art of Human Hacking
+**** TODO Ulanov - Madness and Creativity
+**** TODO Midttun - How to build a Mnemonics Memory Palace
+**** TODO Sjur Middtun - How to Build a Memory Palace
+**** TODO Anthony Storr - Solitude: a return to the self
+**** READING The 7 habits of highly effective people
+*** Art
+**** TODO Dewitte/Larmann/Shields - Gateways to Art: Understanding the Visual Arts
+**** TODO Leonardo Da Vinci - Notebooks
+*** C.S.
+**** DONE Basic C
+CLOSED: [2018-11-25 Sun 18:08]
+**** READING Skienna - Algorithm Design Manual
+**** READING Operating System Concepts
+*** Home Repair
+**** TODO Complete Idiots Guide to Home Repair
+*** Finance
+**** TODO The Wealthy Barber
+**** DONE The Wealthy Barber Returns
+CLOSED: [2018-11-03 Sat 14:45]
+**** DONE John Robertson - The value of simple
+CLOSED: [2018-11-11 Sun 00:21]
+** Short Stories
+*** TODO Poe - The Black Cat
+*** TODO Gogol - Memoirs of a Madman
