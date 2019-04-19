@@ -1,0 +1,54 @@
+* Ownership and Borrowing in Rust
+Rust achieves its goal of memory safety through the concept of ownership. All analysis is done at compile time and not run time so most of the abstractions used in Rust do not have any cost to the end user.
+** Ownership and scopes
+All variables have ownership of the things which they refer to. As soon as we leave the scope of the variable, Rust cleans it up and deallocates memory from the heap.
+#+BEGIN_SRC rust :results output raw
+  fn someThing(){
+      let myVec = vec![1,2,3];
+  }
+#+END_SRC
+
+Additionally, there can only be ONE owner of a particular resource. So, if we reassign the above variable ~myVec~ to something else, say ~myVec2~, then this new variable has ownership of the resources(the vector) and ~myVec~ cannot access it anymore. In rust terms, this is called *moving*. Here is an example of code which will throw an error:
+#+BEGIN_SRC rust :results output raw
+  fn someThing(){
+      let myVec = vec![1,2,3];
+
+      // At this point, myVec2 owns the variable.
+      let myVec2 = myVec;
+
+      // Any access to the vector using myVec will produce problems
+      println!("Here is the first element {}", meVec[0]);
+      // ERROR
+  }
+#+END_SRC
+
+There is an exception to the concept of moving and ownership and it can be found within any data types which implement the ~Copy~ trait. By default, these are any of the primitive data types such as integers. Example below will not throw any errors:
+#+BEGIN_SRC rust :results output raw
+  fn someThing2(){
+      let myNum = 4;
+      let myNum2 = myNum;
+
+      // These will not throw an error since they are copied
+      println!("Here is the first number {}", myNum);
+      println!("Here is the second number {}", myNum2);
+  }
+#+END_SRC
+** Borrowing
+If we have to create functions which modify any value which is a reference, we have to transfer ownership to the function and then return it. This leads to messes such as this one:
+#+BEGIN_SRC rust :results output raw
+  fn thisSucks(v: vec<i32>, v2: vec<i32>){
+      v[0] = 1;
+      v2[0] = 1;
+      (v, v2)
+  }
+#+END_SRC
+The more variables we borrow, the more we need to return. To deal with this, rust introduces borrowing. There are two types of borrows with the first one simply giving temporary ownership(simple access) to a variable without allowing for modification and the second allowing one to modify the structures borrowed. 
+
+~&var~ gives us immutable access. ~&mut var~ gives us mutable. It is important that each variable has only ONE reference within each scope. Each scope determines the lifetime of a borrow.
+
+Borrowing helps out with the following situations:
+- Make sure we do not have any data races
+- Enforce valid references(i.e. making sure that they are not ~NULL~)
+** Lifetimes(FINISH!)
+Lifetimes are used to prevent dangling pointers.
+[[https://doc.rust-lang.org/1.8.0/book/lifetimes.html][Rust link]]
