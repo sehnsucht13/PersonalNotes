@@ -1,0 +1,61 @@
+* Deconstructing buffer.c
+** Basic buffer representation
+Each buffer is represented by a buffer structure. Inside it are the following fields(NOTE: Only the more important/interesting ones are noted):
+- name_ :: A lisp object holding the name of the buffer 
+- filename_ :: Lisp object holding the filename correspoding to the buffer 
+- backed_up_ :: A lisp object to store the state of wheter or not the file is backed up
+- save_length ::  Length of file when last read or saved.
+- auto_save_file_name :: file name used for auto saving
+- read_only :: indicate if buffer is read only
+- mark :: a marker(cursor) which may point to a position in the buffer or not have a value if the active marker is not in the current buffer
+- local-var-alist :: Contains elements for all in buffer variables set. If the symbol is not bound then
+- major mode :: symbol corresponding to the major mode
+- mode_name :: The string printed out in the mode line("pretty name")
+- mode_line_format :: FINISH
+- header_line_format :: object which holds the string to be displayed at the top of the window
+- keymap_ :: Holds the buffer local keybindings
+- abbrev_table_ :: holds the buffer local abbrev table
+- display_table :: Holds the display table for the buffer(What is a display table?)
+- mark_active :: boolean designating if the mark(cursor) is active
+- display_count_ :: Increment when the buffer is displayed in a window
+- indicate_buffer_boundaries :: Indicates
+- minor_modes_ :: An alist of (FUNCTION . STRING) for each minor mode in the buffer
+- own_text :: A structure which represents the text inside the buffer. More on that found in the next section.
+- display_time :: Time stamp updated when buffer is displayed in window
+- cursor type :: Cursor type for buffer
+- extra_line_spacing_ :: The number of pixels between text lines.
+- *text :: Pointer to the own_text field
+- *next :: Pointer to the next buffer
+- pt :: Char position of pointer
+- *base_buffer :: Point to the original buffer while using an indirect buffer
+- indirections :: The number of buffers which share the text
+- window_count :: The number fo windows showing the buffer
+- last_window_start :: Position in buffer during the last time it was displayed
+- undo_list_ :: Changes in the buffer are recorded here for undo
+
+** Basic Text representation inside a buffer
+Emacs uses the buffer [[https://en.wikipedia.org/wiki/Gap_buffer][gap datastructure]] to represent text inside of a buffer. Some of the fields inside the C struct representing text are:
+- beg :: Actual address of the buffer contents
+- gpt/gpt_byte :: The gap position in the buffer represented as a char or byte in the file
+- z/z_byte :: The char/byte position of the end of the buffer
+- gap_size :: Size of buffer gap. Default on a new buffer is 20
+- modiff :: Counts the modification events for the current buffer
+- chars_modiff :: Modified when there is a character change.
+- save_modiff :: Previous value of modiff when the buffer was saved or last visited.(i.e. the starter value)
+- overlay_modiff :: Count the modifications to overlays
+- beg_unchanged :: The beginning of the unchanged region. gpt - beg.
+- end_unchanged :: z - gpt.
+- intervals :: Not too sure as to what this is yet. The comment mentions that they are properties of this buffer's text
+- inhibit_shrinking :: a boolean value which designates whether or not we can shrink the gap
+- redisplay :: Boolean which designates if the bffer needs to be redisplayed.
+*** Possible optimizations
+Use a different data structure to represent text such as ropes or piece tables(used in Atom, vscode and others). At this point, I have no idea as to whether or not we can simply "drop in" a new implementation.
+** Macros
+There are macros to help with boilerplate code. Some examples are:
+- GPT :: access the position of the gap in the buffer
+- SAVE_MODIFF :: access the save_modiff property of the current buffer
+It is pointless to list them all. Best to take a look at the ~buffer.h~ file.
+** Buffer Operations
+- All buffers are stored in a linked list with the most recent one created being at the head.
+- Most of the operations are pretty standard get/set operations which interact with the buffer structure and set/reset/retrieve its fields.
+- An interesting operation is the ~compact_buffer~ function. Its entire job is to truncate the undo list and resize the gap.

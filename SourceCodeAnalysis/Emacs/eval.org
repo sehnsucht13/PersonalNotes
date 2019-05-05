@@ -1,0 +1,10 @@
+* Deconstructing eval.c
+This is a monster of a file which deals with all emacs lisp primitives. This is the core of the elisp interpreter itself. Below will be (relatively) thorough descriptions of the logic behind the execution of each function.
+** Eval
+- Check if its a symbol using ~symbolp~ macro.
+- Retrieve its value or signal error if it is not defined
+- If the value retreived is nil then we set its integer value to 0, if true then 1 and return
+- If it is not a cons object, we simply return it.
+- If we have exceeded the cons threshold, garbage collect
+- Check if we have exceeded the maximum lisp eval depth possible(100 nestings)
+- Set up debugger

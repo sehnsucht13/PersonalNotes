@@ -1,0 +1,11 @@
+* Lread Notes
+** Overview
+The ~lread.c~ file handles parsing of elisp files as well as opening streams to files.
+** Important Functions
+*** Intern
+This is a function which takes in a string and returns the object associated with it.
+*** defsubr
+Used to define a symbol for a function at runtime. In other words, this is how we define new functions to be loaded in the interpreter.
+** Parsing/Reading of Elisp
+*** ReadEvalLoop Function
+

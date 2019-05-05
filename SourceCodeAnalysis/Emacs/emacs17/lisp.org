@@ -1,0 +1,67 @@
+* Notes on Lisp.h Structure
+** Lisp object
+A lisp object is the basic building block of emacs. It is represented as a union with 4 possible parts:
+- A simple integer
+- A structure containing an integer with a bit field of length 24 and a character representing its type called s
+- A structure with an *unsigned* integer with a bit field of length 24 and a char representing type called u(for unsigned)
+- A structure with an unsigned integer with a bitfield of length 24, a lisp type(not a character but an enumerated type) and a mark bit used for garbage collection. This structure is called gu.
+** Lisp Types
+In this version of emacs, there are significantly more lisp object types. They are as follows:
+- Int
+- Symbol
+- Marker(editor pointer)
+- String
+- Vector
+- Cons
+- Temp_Vector(internal usage only and it is not touched by the garbage collector)
+- Buffer
+- Subr(points to a function, its code and documentation)
+- Internal(internally used value which is returned by subrouties of read functions)
+- Intfwd(forwarding pointer to an int variable
+and so on... There are many more, check the file for rest.
+
+Additionally, each type has a corresponding structure assigned to it which holds the data.
+** Compiler Macros
+*** Lisp Object getting/setting
+Working with the lisp object structure is done exclusively through compiler macros. There are quite a lot of them so I will only list some of the most important ones. In general, the majority of them are either predicates(check for some quality), getters or setters.
+- XTYPE :: Return the type of the lisp object
+- XSETTYPE :: Set the type of the object
+- XSET :: Set both the type and value
+and so on...
+In general, the macros to access lisp objects are either of the form XsomeLispObjectType which returns a pointer to the structure housing it or XSETsomeLispObjectType which sets the type.
+*** General
+There are some more geenral ones such as:
+- NULL :: Checks if the value is nil inside the type
+- LISTP :: Check the object is a list(represented by the struct called ~Lisp_Cons~)
+- EQ :: Check if two integers are equal
+- CHECK_someLispType :: Confirm if the specified object is a specific lisp type
+*** DEFUN Macro
+This is a very important macro as it is used to define an elisp function availabe inside the interpreter. It accepts 7 arguments which are as follows:
+- lname :: Name of the function in lisp
+- fnname :: Name of the function in C
+- sname :: Name of the C constant structure which records info about the function for internal use
+- minargs :: Min number of args
+- maxargs :: Max number of args which can either be an integer, MANY(indicates passing of a vector with the args) or UNEVALLED(pass a lisp with unevaluated arguments)
+- prompt :: A string which says how to read the arguments of an interactive call. If it is 0 then the call cannot be used interactively. The types of parsing are many and are best looked up from ~lisp.h~ directly.
+- doc :: Documentation for the user.
+
+Here is the full macro:
+#+BEGIN_SRC C :results output raw
+#define DEFUN(lname, fnname, sname, minargs, maxargs, prompt, doc) \
+  Lisp_Object fnname (); \
+  struct Lisp_Subr sname = {fnname, minargs, maxargs, lname, prompt, 0}; \
+  Lisp_Object fnname
+#+END_SRC
+The macro expands to a function call to ~fnname~ (the C name of the function), the details are loaded in a ~Lisp_Subr~ structure and finally we create a lisp object with ~fnname~.
+*** Defsubr Macro
+This is included in the data.c so look there but just to offer a quick summary. It is used to define the symbol for the function name provided at startup time.
+*** SpecBinding
+This is a structure which is used for backtracing/debugging. It is quite simple and only made up of 2 lisp objects called symbol and old_value.
+
+Additionally, there are 3 other variables to keep an eye on which are:
+- specpdl
+- specpdl_ptr
+- specpdl_size
+  WHAT ARE THEY USED FOR?????
+*** Remainder of lisp.h
+The remainder of the header file is simply ~extern~ declarations of functions. It is quite useful as one gets an overview of which functions go where.

@@ -1,0 +1,8 @@
+* Git concepts
+Some notes on different git concepts and their respective pros/cons if applicable
+** Rebase VS Merge
+Whenever we are working in a git repository with more than one branch, we might like to merge another one of the available branches into our current working one. This can be done in two main ways and each has their advantages and disadvantages:
+*** Merge
+To add any missing work from another branch into our own, we can use the ~merge~ command. What it does is simply take the commits which are missing from the source branch and add them into the target branch(our own branch usually). This is a non-destructive action and preserves the histories of both branches but this comes at a price of costing an extra commit which is dedicated only to this merge. While this is not a big deal on small projects, if we have to merge often, this means that there are a lot of commits polluting the history of the branch which is just plain noise and does nothing but get in the way.
+*** Rebase
+

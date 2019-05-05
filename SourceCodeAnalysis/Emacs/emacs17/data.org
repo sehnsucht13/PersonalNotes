@@ -1,0 +1,24 @@
+* Data.c Notes
+** Overview
+Contains DEFUN macros for almost every function which operates on a data type. This includes things such as ~integerp~, ~vectorp~, ~car~, ~cdr~ and so on.
+*** Small example
+#+BEGIN_SRC C :results output raw
+DEFUN ("car", Fcar, Scar, 1, 1, 0,
+  "Return the car of CONSCELL.  If arg is nil, return nil.")
+  (list)
+     Lisp_Object list;
+{
+  while (1)
+    {
+      if (XTYPE (list) == Lisp_Cons)
+	return XCONS (list)->car;
+      else if (EQ (list, Qnil))
+	return Qnil;
+      else
+	list = wrong_type_argument (Qlistp, list);
+    }
+}
+#+END_SRC
+This function accepts 1 argument(a list). It checks if the type of the argument provided is of type ~Lisp_Cons~ and if it is, it returns the value held in the first part of the cons cell. If the list is nil(empty list) then it returns the ~Qnil~ symbol and finally, if it is neither of those then it must be the wrong arugment.
+*** Interesting
+All mathematical operators are considered to be functions themselves. So operators such as ~+~ or ~%~ are implemented using the DEFUN macro.

@@ -1,0 +1,41 @@
+* Emacs project folder structure
+The emacs project is broken up onto the following folders
+** Src/
+This is where the C core of emacs lies and the majority of the files here are either related to the interpreter, the user interface or to provide utilities which cannot be provide with emacs lisp(operating system interface, functions which require more speed than elisp can provide...). Some of the more notable files are:
+- emacs.c :: Contains the main loop for emacs
+- lisp.h :: Contains a series of macros which represent the C versions of emacs lisp.
+- eval.c :: The emacs interpreter eval function
+- buffer.c :: Everything related to emacs buffers
+- bytecode.c :: The bytecode interpreter
+- frame.c :: Everything related to emacs frames
+- pdumber.c :: Portable dumper to be included in emacs 27
+- profiler.c :: The emacs profiler
+- term.c :: Everything related to terminal operations(opening tty, closing, color...)
+- window.c :: Emacs window controls
+- emacs-module.c :: The emacs modules introduced in emacs 25
+- process.c :: Everything related to OS process control(spawning, terminating...)
+- marker.c :: Everything related to controlling the marker/cursor inside the current buffer
+- minibuf.c :: Minibuffer related operations
+- dispnew.c :: Redisplay related functionality
+- syntax.c :: Parsing of lists and syntax tables
+- sysdep.c :: Access OS dependent api's
+- regex-emacs.c :: Regex routines for both POSIX and non-POSIX systems
+- ralloc.c :: No idea what this does yet
+- w32* :: Related to Microsoft Windows UI
+- image.c :: Everything related to image display
+- unex* :: Not too sure as to what this does yet. Seems to "dump" emacs for different platforms. Linking perhaps?
+- x* :: Contains everything for X11 version of emacs
+- ns* :: Cocoa/MacOS API. Mentions something about NeXT Step,OpenStep and GNUStep. First two are dead OS's and the third is the GNU version of the Cocoa API.
+- scroll.c :: Line Deletion and Insertion
+- msdos.c :: MSDOS support(Why the fuck is this still there?)
+- keymap.c :: Keymap wizardry!
+- thread.c :: Everything related to the emacs thread API. Uses the ~systhread~ file which contains platform dependent threading wrappers.
+- undo.c :: As expected it contains undo functions
+- dired.c :: Dired related functions
+- epaths.in :: The first line reads "/* Hey Emacs, this is -*- C -*- code!  */". Why is this necessary. What does this actually do?
+- fringe.c :: Contains bitmaps and interaction functions for the window fringes
+- data.c :: Primitive operations on emacs lisp. Includes things such as comparison, and, or and so on...
+** Lib/
+Extra bits such as timespec operations, string operations, load average and so on
+** Lib-Src/
+This folder consists of some extra bits for emacs utilities such as the emacs client, ctags, ebrowse and so on.

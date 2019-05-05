@@ -1,0 +1,6 @@
+* Deconstructing Emacs
+This is a small set of org files which attempt to document the emacs internals as I read through the source code for version 20.1 since it is smaller and more managable. Additionally, this README will contain some extra links which I have gathered throughout the journey which will contain extra information.
+* Links
+* Interesting(but not necessarily informative links)
+[[https://github.com/boostpro/emacs-llvm-jit][JIT compiler for elisp using llvm]]
+[[https://github.com/pinard/Pymacs][Pymacs - An attempt to create an interface between python and elisp]]

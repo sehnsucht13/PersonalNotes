@@ -1,0 +1,3 @@
+* Data.c Deconstruction
+** Main purpose
+This file holds data operations done on lisp data types as well as defining some integral functions for loading lisp symbols into the interpreter at startup.

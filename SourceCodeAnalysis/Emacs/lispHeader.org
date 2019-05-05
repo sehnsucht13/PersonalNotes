@@ -1,0 +1,64 @@
+* Deconstructing Lisp.h 
+** Contents
+This header file contains a set of macros which are used to represent the basic emacs types and the related operations. Additionally, it also contains function definitions for every function that is exposed to other C files. 
+** Primitive
+EMACS_INT/WIDTH/MAX/EMACS_UINT
+EMACS_INT/UINT hold signed and unsigned integers representing emacs values. WIDTH is the # of bits and MAX is the max integer number.
+** Lisp object
+A lisp object is a tagget pointer or integer. There are 6 main types.
+- A single integer which can also be used for comparison
+- A struct called s which contains a value type called val and a type. Both are integers(This will be a pointer)
+- A struct called u which contains an *unsigned* integer called val and an integer called type(This will be a pointer)
+- A struct called gu which contains an *unsidned* int called val and a type as well as a markbit used for garbage collection
+** Fundamental Lisp Types
+Housed in enum called Lisp_Type. There are 6 main ones
+- Lisp Symbol
+- Lisp int
+- Lisp String
+- Lisp Vectorlike(vecotr)
+- Lisp cons
+- Lisp float
+** Define Macros
+- EQ :: Check if two lisp objects are the same
+- NILP :: Check if the lisp object is nil using EQ
+- symbol_val :: 
+- eassert :: check if the condition provided is false or not. Returns false.
+- XLI :: Convert to arg. to emacs int
+- XIL :: Convert to lisp object
+- XLP :: Convert to a void pointer to the object passed as argument
+- XPL :: convert to a lisp object
+- TAGGEDP :: Check if the lisp object has a certain type of tag which is contained in Lisp_Types. See above for them
+- STRINGP :: Check if the lisp object is a string
+
+
+* Special Macros for defining Emacs lisp constructs in C
+** DEFUN
+- DEFUN :: This is the macro which is used to define C functions which can be called from emacs lisp. The best explanation is found in the emacs lisp manual:
+
+           The word DEFUN is followed by seven parts inside of parentheses:
+
+           The first part is the name given to the function in Lisp, delete-and-extract-region.
+           The second part is the name of the function in C, Fdelete_and_extract_region. By convention, it starts with ‘F’. Since C does not use hyphens in names, underscores are used instead.
+           The third part is the name for the C constant structure that records information on this function for internal use. It is the name of the function in C but begins with an ‘S’ instead of an ‘F’.
+           The fourth and fifth parts specify the minimum and maximum number of arguments the function can have. This function demands exactly 2 arguments.
+           The sixth part is nearly like the argument that follows the interactive declaration in a function written in Lisp: a letter followed, perhaps, by a prompt. The only difference from Lisp is when the macro is called with no arguments. Then you write a 0 (which is a null string), as in this macro.
+
+           If you were to specify arguments, you would place them between quotation marks. The C macro for goto-char includes "NGoto char: " in this position to indicate that the function expects a raw prefix, in this case, a numerical location in a buffer, and provides a prompt.
+           The seventh part is a documentation string, just like the one for a function written in Emacs Lisp. This is written as a C comment. (When you build Emacs, the program lib-src/make-docfile extracts these comments and uses them to make the documentation.) 
+           
+After the macro, we define the maximum number of Lisp objects which are used for this. A simple example is the implementation of the "buffer-live-p" lisp command:
+
+DEFUN ("buffer-live-p", Fbuffer_live_p, Sbuffer_live_p, 1, 1, 0,
+       doc: //* Return non-nil if OBJECT is a buffer which has not been killed.
+Value is nil if OBJECT is not a buffer or if it has been killed.  *//)
+  (Lisp_Object object)
+{
+  return ((BUFFERP (object) && BUFFER_LIVE_P (XBUFFER (object)))
+	  ? Qt : Qnil);
+}
+
+The function takes a min and max argument of 1. The Lisp_Object "object" refers to this one argument which must be provided. From this point, all operations which are done to this object will represent what happens with the argument which is provided.
+
+If we gain take the example of our "buffer-live-p" function, we would do the following:
+1. Check if the argument provided is an actual buffer
+2. Remove the buffer tag on the buffer and check if that is a buffer and return either Qt(represents t in elisp) or Qnil(represents nil in elisp)

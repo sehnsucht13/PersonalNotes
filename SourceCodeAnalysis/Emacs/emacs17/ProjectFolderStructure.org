@@ -1,0 +1,12 @@
+* Project Folder structure
+** Src Folder
+- emacs.c :: Main driver of the editor. Loads everything prior to startup
+- data.c :: Primitive data operations
+- eval.c :: Eval function of the interpreter
+- lprint.c :: Parsing/Text Stream handling
+- macros.c/h :: Takes care of elisp macros
+- buffer.c/h :: Operations on the buffer
+- bytecode.c :: Bytecode compiler
+- lisp.h :: Contains basic lisp object types, macros for working with them as well as function prototypes for every function in emacs.
+- undo.c :: As the name suggests, it handles undo
+- dired.c :: Handles dired

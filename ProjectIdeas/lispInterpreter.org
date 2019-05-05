@@ -78,7 +78,7 @@ Dick Grune et. al. - Modern Compiler Design
 Thorsten Ball - Writing an interprer in Go
 * Some random ideas
 Perhaps, instead of using rpc to send out commands load wasm modules.
-
+** Update
 UPDATE: On second thought, this would not work. Still need an rpc but we can write a module which converts elisp internal data structures to js for them to be operated on. 
 
 The goal of this is to have interoperability with javascript.
@@ -88,3 +88,5 @@ Perhaps, I could write the lisp interpreter in rust and add it to node.js as a w
 When it comes to the file system, I can use the node.js built in library(will work on mac,windows and linux) and call that from wasm.
 
 In other words, I make the interpreter in rust. Compile to wasm. Start node.js, load the script containing the interpreter and from there I can write the rest in javascript/typescript perhaps. This will also let me call functions written in JS from lisp which will let the two languages work together.
+** Another idea
+Strip down existing emacs source code and make it run with llvm. From there, build it on top of native UI libraries and ditch the exec.
