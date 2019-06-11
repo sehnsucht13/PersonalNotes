@@ -1,3 +1,6 @@
 * Project Ideas
+** TODO Create an emacs interface to googler
+* TODO Improved elisp library for folders and strings
+Create a small subset of the features in the python library in elisp and submit it to emacs
 ** Create a package which removes all modes from the line and lets the user invoke them in a temp list
 The user must also be able to disable them, keep major mode only and add special rules for disabling them

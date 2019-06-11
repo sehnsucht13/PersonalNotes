@@ -30,7 +30,6 @@ Housed in enum called Lisp_Type. There are 6 main ones
 - TAGGEDP :: Check if the lisp object has a certain type of tag which is contained in Lisp_Types. See above for them
 - STRINGP :: Check if the lisp object is a string
 
-
 * Special Macros for defining Emacs lisp constructs in C
 ** DEFUN
 - DEFUN :: This is the macro which is used to define C functions which can be called from emacs lisp. The best explanation is found in the emacs lisp manual:
@@ -62,3 +61,4 @@ The function takes a min and max argument of 1. The Lisp_Object "object" refers 
 If we gain take the example of our "buffer-live-p" function, we would do the following:
 1. Check if the argument provided is an actual buffer
 2. Remove the buffer tag on the buffer and check if that is a buffer and return either Qt(represents t in elisp) or Qnil(represents nil in elisp)
+* Other Various bits and pieces
