@@ -1,0 +1,22 @@
+* Remacs
+Some notes on the remacs structure
+** Including and using C functions
+Everything is in a crate. All functions ported over from C are available from their respective crates such as ~frames~ or ~dispnew~. When it comes to incrementally porting functions, we need to be able to call C functions and C global variables. This is done by using the crate called ~remacs::sys~. We can import types, functions, global variables and so on. Whenever we use one of these pieces, they need to be wrapped in an ~unsafe~ block like so:
+#+BEGIN_SRC rustic
+  // Something something
+  unsafe{
+      some_c_function_here(arg1, arg2, arg3);
+  }
+#+END_SRC
+
+Return values are set like this:
+#+BEGIN_SRC rustic
+  let someRetVal = unsafe {
+      some_c_function_here(arg1, arg2, arg3);
+  }
+#+END_SRC
+** Pointers and internal emacs types
+- ~from~ methods are used to convert from one type into another. If we look at ~frame.rs~, we can see that there is a ~from~ which translates a ~LispObject~ into a ~LispFrameRef~ which is a pointer/reference to a frame. ~into~ is used to convert/cast something into another type. If ~from~
+  is defined then we get ~into~ for free.
+** Building
+Don't use cargo build. Instead use ~make -j4~ to build the project. If we import a function, the bindings need to be regenerated which cargo build does not do currently. If we use cargo build, it will result in imported c functions not being recognized. 

@@ -1,3 +1,42 @@
+* From/Into
+From and into are used for type casting. They are implemented as traits for a
+specific structurer. The look something like this:
+#+begin_src rustic
+  use std::convert::From;
+
+  #[derive(Debug)]
+  struct Number {
+      value: i32,
+  }
+
+  impl From<i32> for Number {
+      fn from(item: i32) -> Self {
+          Number { value: item }
+      }
+  }
+
+  fn main() {
+      let num = Number::from(30);
+      println!("My number is {:?}", num);
+
+      let int = 5;
+      let numInto: Number = int.into();
+      println!("My number is {:?}", numInto);
+
+  }
+#+end_src
+In the example above, ~from~ is used to convert *from* the integer 30 into the
+structure ~Number~. On the other hand, ~into~ is used to convert the integer
+structure *into* the number structure. Both are used in a similar manner. At this
+point in my knowledge, it seems like they are quite similar its just that ~into~
+requires us give the variable a type explicitly.
+* Options
+Options are pretty much the same as the ~Maybe~ data type in Haskell. They can
+have the value of either ~None~ or ~Some(x)~, where ~x~ is some object. If a function
+returns an ~Option~ then we can use ~match~ to match against the return
+value. Additionally, we can also use ~unwrap~ to access the value but this might
+cause a panic if the value inside the ~Option~ is ~None~. If it is successful, the
+value wrapped inside of the ~Option~ is returned.
 * Ownership and Borrowing in Rust
 Rust achieves its goal of memory safety through the concept of ownership. All analysis is done at compile time and not run time so most of the abstractions used in Rust do not have any cost to the end user.
 ** Ownership and scopes

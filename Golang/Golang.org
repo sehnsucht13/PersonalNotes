@@ -1,0 +1,3 @@
+* Golang Notes
+* Resources
+[[https://www.programming-books.io/essential/go/][Golang Beginner book]]

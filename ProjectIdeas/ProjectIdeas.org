@@ -1,6 +1,42 @@
 * Project Ideas
-** TODO Create an emacs interface to googler
-* TODO Improved elisp library for folders and strings
-Create a small subset of the features in the python library in elisp and submit it to emacs
-** Create a package which removes all modes from the line and lets the user invoke them in a temp list
+** TODO  Improve CSSS discord bot
+Currently the bot does not recognize something like:
+~phil120~ but it does recognize something like ~phil120w~. To eliminate this,
+we can easily try to access phil120 at first. If error then we append all the
+postfixes. Finally, we need to deal with the issue of slop. This is the last
+case and we can simply check if what is typed in is an anagram for one of
+departments. Having too many letters might be solved in a similar
+problem. Should be pretty easy since python3 is used. Additionally, add some
+tests with pytest perhaps.
+
+** DONE Add rustic open new project on creation
+CLOSED: [2019-07-12 Fri 20:38]
+** TODO Use this to test program
+https://marketplace.visualstudio.com/items?itemName=vahidk.tensorflow-snippets
+** TODO Recreate this with helm and ivy interface
+https://marketplace.visualstudio.com/items?itemName=rubbersheep.gi
+** TODO Create a snippet converter
+Create a CLI program which converts snippets from one text editor format to another. Emacs and vim are fairly similar. vscode uses json. Sublime and Visual Studio seem to use xml to define theirs. A large problem will be resolving/detecting tab stops and converting any advanced functionality. 
+
+- The visual studio snippets look like a mess where there is a variety of fields which might be hard to port accross editors. 
+- Sublime on the other hand seem more tame.
+** CANCELED Create an emacs interface to googler
+CLOSED: [2019-07-12 Fri 20:38]
+- State "CANCELED"   from "TODO"       [2019-07-12 Fri 20:38] \\
+  Don't feel like it
+** TODO Create a package which removes all modes from the line and lets the user invoke them in a temp list
 The user must also be able to disable them, keep major mode only and add special rules for disabling them
+** TODO Rustic
+*** TODO Add better recognition of workspaces
+*** TODO Add doc compilation and opening
+*** TODO Add mode to install dependencies
+*** TODO Add ability to install rust programs needed(outdated, install)
+*** TODO Add ability to query crates.io
+*** TODO Convert help buffer into tabulated mode to select options
+*** TODO Add a transient
+** TODO Finish watcher
+** TODO Finish qt5screenshooter
+** TODO Finish messer
+** TODO Hack on remacs
+** TODO Improved elisp library for folders and strings
+Create a small subset of the features in the python library in elisp and submit it to emacs
