@@ -1,0 +1,27 @@
+* To Read/Cool Stuff
+** Python Related
+*** TODO [[https://leanpub.com/insidethepythonvirtualmachine/read][Python VM internals]]
+*** TODO [[https://hackmd.io/@xff9N3eQTLSL4Trq-6setg/ByMHBMjFe?type=view#03-Debugging-the-parser][Debugging the Python parser]]
+*** TODO [[https://paper.dropbox.com/doc/Yet-another-guided-tour-of-CPython-XY7KgFGn88zMNivGJ4Jzv][Guided tour of Python by Guido]]
+** Interview Prep
+*** TODO [[https://www.teamblind.com/article/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU][Leetcode Questions]]
+** Rust
+[[https://cheats.rs/#references-pointers][Cheatsheet]]
+*** Concurrency
+[[https://medium.com/@polyglot_factotum/rust-concurrency-patterns-communicate-by-sharing-your-sender-re-visited-9d42e6dfecfa][Rust Concurrency Medium Blog]]
+[[https://doc.rust-lang.org/book/ch16-01-threads.html][Rust Book Concurrency]]
+** C++
+[[http://www.emulator101.com/memory-maps.html][Emulators101]]
+** General
+[[http://www.openculture.com/][Open Culture]]
+[[https://medium.com/javascript-scene/must-see-javascript-dev-tools-that-put-other-dev-tools-to-shame-aca6d3e3d925][Javascript tooling]]
+[[https://standardebooks.org/ebooks/][Standard Ebooks(Free ebooks which are typeset nicely!)]]
+[[https://github.com/danistefanovic/build-your-own-x][Build Your Own X - How to build cool stuff!]]
+[[https://github.com/rby90/Project-Based-Tutorials-in-C][Project Based Tutorials in C]]
+[[http://www.defmacro.org/2016/11/25/essay-reading-list.html][Interesting essay recommendation]]
+[[http://dougengelbart.org/content/view/138][Englebart]]
+** Programming Language creation
+*** TODO [[https://github.com/nuua-io/Nuua][Nuua programming language source]](Not too many details so it should be easy to read through!)
+*** TODO [[https://github.com/jamiebuilds/the-super-tiny-compiler][Build a small compiler in JS]] 
+*** TODO [[https://github.com/japanoise/gomacs][Emacs in go]]
+*** TODO [[https://github.com/zhemao/glisp][Lisp in Golang!]]

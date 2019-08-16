@@ -1,4 +1,48 @@
 * Project Ideas
+** TODO Copy this in elisp?
+https://github.com/arp242/jumpy.vim
+** TODO Some code which will help with implementing the docstring generator
+This code only works with python but i am sure that it can easily be augmented
+to serve for others as well
+
+#+BEGIN_SRC emacs-lisp
+(defun python-split-args (arg-string)
+  "Split a python argument string into ((name, default)..) tuples"
+  (mapcar (lambda (x)
+             (split-string x "[[:blank:]]*=[[:blank:]]*" t))
+          (split-string arg-string "[[:blank:]]*,[[:blank:]]*" t)))
+
+(defun python-args-to-docstring ()
+  "return docstring format for the python arguments in yas-text"
+  (let* ((indent (concat "\n" (make-string (current-column) 32)))
+         (args (python-split-args yas-text))
+         (max-len (if args (apply 'max (mapcar (lambda (x) (length (nth 0 x))) args)) 0))
+         (formatted-args (mapconcat
+                (lambda (x)
+                   (concat (nth 0 x) (make-string (- max-len (length (nth 0 x))) ? ) " -- "
+                           (if (nth 1 x) (concat "\(default " (nth 1 x) "\)"))))
+                args
+                indent)))
+    (unless (string= formatted-args "")
+      (mapconcat 'identity (list "Keyword Arguments:" formatted-args) indent))))
+
+(defun python-args-to-docstring-numpy ()
+  "return docstring format for the python arguments in yas-text"
+  (let* ((args (python-split-args yas-text))
+         (format-arg (lambda(arg)
+                       (concat (nth 0 arg) " : " (if (nth 1 arg) ", optional") "\n")))
+         (formatted-params (mapconcat format-arg args "\n"))
+         (formatted-ret (mapconcat format-arg (list (list "out")) "\n")))
+    (unless (string= formatted-params "")
+      (mapconcat 'identity
+                 (list "\nParameters\n----------" formatted-params
+                       "\nReturns\n-------" formatted-ret)
+                 "\n"))))
+
+#+END_SRC 
+
+** TODO Make a frontend for vuecli
+** TODO Make a mode for vue as well as some snippets
 ** TODO  Improve CSSS discord bot
 Currently the bot does not recognize something like:
 ~phil120~ but it does recognize something like ~phil120w~. To eliminate this,
@@ -38,5 +82,9 @@ The user must also be able to disable them, keep major mode only and add special
 ** TODO Finish qt5screenshooter
 ** TODO Finish messer
 ** TODO Hack on remacs
+** TODO Make an epub reader with electron
+** TODO Make a vue component which renders a terminal and displays a message
+** TODO Create a github page which shows off my projects with images and explanations
+** TODO Create a small emulator with c++
 ** TODO Improved elisp library for folders and strings
 Create a small subset of the features in the python library in elisp and submit it to emacs
