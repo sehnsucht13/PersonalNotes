@@ -1,0 +1,45 @@
+#+TODO: TODO READING ABANDONED | DONE
+* Books To Read
+** Fiction
+**** DONE Cormac McCarthy - The Road
+CLOSED: [2018-10-17 Wed 20:15]
+**** DONE Houellebecq - Whatever
+CLOSED: [2018-12-16 Sun 14:52]
+**** DONE Houullebecq - Submission
+CLOSED: [2018-12-22 Sat 20:36]
+**** TODO The Little Prince
+**** DONE Leo Tolstoy - The Devil
+CLOSED: [2018-08-20 Mon 15:54]
+**** DONE Ray Bradbury - Fahrenheit 451
+CLOSED: [2018-08-22 Wed 20:38]
+**** DONE George Orwell - 1984
+CLOSED: [2018-08-22 Wed 20:38]
+**** DONE Dostoyevski - Notes From the Underground
+CLOSED: [2018-09-15 Sat 23:11]
+**** DONE Dmitry Glukhovsky - Metro 2033
+CLOSED: [2018-11-20 Tue 15:47]
+**** DONE Dmitry Glukhovsky - Metro 2034
+CLOSED: [2018-11-25 Sun 18:07]
+**** TODO Leo Tolstoy - A confession
+**** TODO Mark Twain - The mysterious stranger
+** Non-Fiction
+*** Philosophy
+**** DONE Viktor Frankl - Man's Search For Meaning
+CLOSED: [2018-08-06 Mon 12:36]
+*** C.S.
+**** DONE Basic C
+CLOSED: [2018-11-25 Sun 18:08]
+**** READING Skienna - Algorithm Design Manual
+**** DONE Operating System Concepts
+CLOSED: [2019-08-31 Sat 21:39]
+*** Finance
+**** TODO The Wealthy Barber
+**** DONE The Wealthy Barber Returns
+CLOSED: [2018-11-03 Sat 14:45]
+**** DONE John Robertson - The value of simple
+CLOSED: [2018-11-11 Sun 00:21]
+** Short Stories
+*** TODO Poe - The Black Cat
+*** TODO Gogol - Memoirs of a Madman
+* Authors to check out
+- Iain Banks
