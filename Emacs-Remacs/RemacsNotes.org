@@ -1,0 +1,6 @@
+* Remacs notes
+** Macros Cheatsheet
+** Notes
+- Globals can be accessed by importing ~globals~ crate. Then each global var can be accessed with ~globals.VAR_NAME~.
+** Improvements
+
